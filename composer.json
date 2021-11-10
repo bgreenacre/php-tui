@@ -1,0 +1,25 @@
+{
+    "name": "php-terminal/php-terminal",
+    "description": "A library to handle terminal interaction and is inspired by nodejs blessed package",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpTerminal\\PhpTerminal\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Brian Greenacre",
+            "email": "bgreenacre42@gmail.com"
+        }
+    ],
+    "require": {
+        "react/event-loop": "^1.2",
+        "react/stream": "^1.2",
+        "clue/stdio-react": "^2.5",
+        "react/child-process": "^0.6.4",
+        "react/promise": "^2.8",
+        "react/promise-stream": "^1.3"
+    }
+}
