@@ -1,11 +1,11 @@
 {
-    "name": "php-terminal/php-terminal",
+    "name": "php-tui/php-tui",
     "description": "A library to handle terminal interaction and is inspired by nodejs blessed package",
     "type": "project",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "PhpTerminal\\PhpTerminal\\": "src/"
+            "PhpTui\\PhpTui\\": "src/"
         }
     },
     "authors": [
@@ -17,6 +17,10 @@
     "require": {
         "react/event-loop": "^1.2",
         "react/stream": "^1.2",
-        "symfony/console": "^5.3"
+        "symfony/console": "^5.3",
+        "symfony/string": "^5.3",
+        "pimple/pimple": "^3.5",
+        "clue/utf8-react": "^1.2",
+        "clue/term-react": "^1.3"
     }
 }
