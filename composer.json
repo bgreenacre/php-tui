@@ -17,9 +17,7 @@
     "require": {
         "react/event-loop": "^1.2",
         "react/stream": "^1.2",
-        "symfony/console": "^5.3",
         "symfony/string": "^5.3",
-        "pimple/pimple": "^3.5",
         "clue/utf8-react": "^1.2",
         "clue/term-react": "^1.3"
     }

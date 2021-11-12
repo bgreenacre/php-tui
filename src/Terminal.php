@@ -81,7 +81,6 @@ class Terminal {
 
     public function isInteractive() : bool
     {
-        return SymfonyTerminal::hasSttyAvailable();
     }
 
     public function getColourSupport() : int

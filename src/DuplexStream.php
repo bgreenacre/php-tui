@@ -13,8 +13,6 @@ use React\Stream\ReadableStreamInterface;
 use React\Stream\WritableStreamInterface;
 use React\Stream\Util;
 use React\Stream\WritableResourceStream;
-use Symfony\Component\Console\Cursor;
-use Symfony\Component\Console\Terminal;
 
 class DuplexStream extends EventEmitter implements DuplexStreamInterface {
 
