@@ -4,68 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a88d28e0bf7734119458204a8fdbcc8",
+    "content-hash": "a59ac15f9f30a4b0adf1f47a87e5b409",
     "packages": [
-        {
-            "name": "clue/term-react",
-            "version": "dev-feature/add-ss2-ss3-support",
-            "dist": {
-                "type": "path",
-                "url": "../reactphp-term",
-                "reference": "26669086b65c1021def5505787e90fd5e1d5870d"
-            },
-            "require": {
-                "php": ">=5.3",
-                "react/stream": "^1.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8",
-                "react/event-loop": "^1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\React\\Term\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Clue\\Tests\\React\\Term\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@clue.engineering"
-                }
-            ],
-            "description": "Streaming terminal emulator, built on top of ReactPHP.",
-            "homepage": "https://github.com/clue/reactphp-term",
-            "keywords": [
-                "ANSI",
-                "ASCII",
-                "C0",
-                "C1",
-                "ReactPHP",
-                "VT100",
-                "apc",
-                "control codes",
-                "csi",
-                "dps",
-                "osc",
-                "pm",
-                "streaming",
-                "terminal",
-                "xterm"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
         {
             "name": "clue/utf8-react",
             "version": "v1.2.0",
@@ -2965,9 +2905,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "clue/term-react": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

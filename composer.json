@@ -14,21 +14,11 @@
             "email": "bgreenacre42@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../reactphp-term",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "react/event-loop": "^1.2",
         "react/stream": "^1.2",
         "symfony/string": "^5.3",
-        "clue/utf8-react": "^1.2",
-        "clue/term-react": "dev-feature/add-ss2-ss3-support"
+        "clue/utf8-react": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
