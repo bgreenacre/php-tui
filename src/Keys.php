@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace PhpTui\PhpTui;
 
-use Clue\React\Term\ControlCodeParser;
+use Exception;
 use Clue\React\Utf8\Sequencer as Utf8Sequencer;
 use Evenement\EventEmitter;
 use Evenement\EventEmitterInterface;
 use React\Stream\ReadableStreamInterface;
-use Symfony\Component\String\UnicodeString;
 
 class Keys extends EventEmitter
 {
@@ -111,25 +110,13 @@ class Keys extends EventEmitter
         "\x1b[24~"  => self::KEY_F12,
     ];
 
-    protected $input;
-    protected $parser;
     protected $sequencer;
     protected $close = false;
     protected $buffer = '';
 
     public function __construct(ReadableStreamInterface $input)
     {
-        $this->input = $input;
-        $this->parser = new ControlCodeParser($input);
-        $this->parser->on('csi', [$this, 'decoder']);
-        $this->parser->on('osc', [$this, 'decoder']);
-        $this->parser->on('c1', [$this, 'decoder']);
-        $this->parser->on('c0', [$this, 'decoder']);
-        $this->parser->on('ss2', [$this, 'decoder']);
-        $this->parser->on('ss3', [$this, 'decoder']);
-
-
-        $this->sequencer = new Utf8Sequencer($this->parser);
+        $this->sequencer = new Utf8Sequencer($input);
         $this->sequencer->on('data', [$this, 'decoder']);
 
         // process all stream events (forwarded from input stream)
@@ -138,7 +125,7 @@ class Keys extends EventEmitter
         $this->sequencer->on('close', [$this, 'close']);
     }
 
-    public function decoder($data)
+    public function decoder($data): void
     {
         $key = [
             'sequence' => $data,
@@ -149,45 +136,46 @@ class Keys extends EventEmitter
         ];
 
         if (isset(self::CODES[$data])) {
-            if (\is_array(self::CODES[$data])) {
+            if (is_array(self::CODES[$data])) {
                 $key = $key + self::CODES[$data];
-            }
-            else {
+            } else {
                 $key['name'] = self::CODES[$data];
             }
+        } else if (strlen($data) === 1 && preg_match('/^[A-Z]$/', $data)) {
+            // shift + letter
+            $key['shift'] = true;
+        } else if (strlen($data) === 1 && $data <= "0x1a") {
+            // ctrl + letter
+            $key['ctrl'] = true;
+            $key['name'] = chr(ord($data[0]) + ord('a') - 1);
+        } else if (preg_match('/^' . self::META_KEYCODE . '$/', $data, $parts)) {
+            // meta + character key
+            $key['name'] = strtolower($parts[1]);
+            $key['meta'] = true;
+            $key['shift'] = preg_match('/^[A-Z]$/', $parts[1]) !== false;
+        } else if (preg_match('/^' . self::FUNC_KEYCODE . '/', $data, $parts)) {
+            $code = $parts[1]
+                . $parts[2]
+                . $parts[4]
+                . $parts[9];
+
+            $modifier = ($parts[3] || $parts[8] || 1) - 1;
+
+            $key['ctrl'] = !!($modifier & 4);
+            $key['meta'] = !!($modifier & 10);
+            $key['shift'] = !!($modifier & 1);
+            $key['code'] = $code;
+            $key['name'] = isset(self::CODES[$code]) ? self::CODES[$code] : null;
         }
-        else {
-            if (\preg_match('/^' . self::META_KEYCODE . '$/', $data, $parts) === 1) {
-                // meta+character key
-                $key['name'] = \strtolower($parts[1]);
-                $key['meta'] = true;
-                $key['shift'] = \preg_match('/^[A-Z]$/', $parts[1]) !== false;
-            } else if (\preg_match('/^' . self::FUNC_KEYCODE . '/', $data, $parts) === 1) {
-                $code = $parts[1]
-                    . $parts[2]
-                    . $parts[4]
-                    . $parts[9];
 
-                $modifier = ($parts[3] || $parts[8] || 1) - 1;
-
-                $key['ctrl'] = !!($modifier & 4);
-                $key['meta'] = !!($modifier & 10);
-                $key['shift'] = !!($modifier & 1);
-                $key['code'] = $code;
-                $key['name'] = isset(self::CODES[$code]) ? self::CODES[$code] : null;
-            } else if (\preg_match('/^[A-Z]$/', $data) === 1) {
-                $key['shift'] = true;
-            }
-        }
-
-        $ch = \strlen($data) === 1 ? $data : null;
+        $ch = strlen($data) === 1 ? $data : null;
         $this->emit('keypress', [$ch, $key]);
     }
 
-    public function isMouse($data) : bool
+    public function isMouse($data): bool
     {
         foreach(self::IS_MOUSE as $match) {
-            if (! empty((new UnicodeString($data))->match($match))) {
+            if (preg_match($match, $data)) {
                 return true;
             }
         }
@@ -196,7 +184,7 @@ class Keys extends EventEmitter
     }
 
     /** @internal */
-    public function handleEnd() : void
+    public function handleEnd(): void
     {
         if (! $this->closed) {
             $this->emit('end');
@@ -205,13 +193,13 @@ class Keys extends EventEmitter
     }
 
     /** @internal */
-    public function handleError(\Exception $error) : void
+    public function handleError(Exception $error): void
     {
         $this->emit('error', [$error]);
         $this->close();
     }
 
-    public function close() : void
+    public function close(): void
     {
         if ($this->closed) {
             return;
