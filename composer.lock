@@ -4,29 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db57a738a2eea4de4f5f8a58ac1e50c4",
+    "content-hash": "5a88d28e0bf7734119458204a8fdbcc8",
     "packages": [
         {
             "name": "clue/term-react",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/reactphp-term.git",
-                "reference": "eb6eb063eda04a714ef89f066586a2c49588f7ca"
-            },
+            "version": "dev-feature/add-ss2-ss3-support",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/reactphp-term/zipball/eb6eb063eda04a714ef89f066586a2c49588f7ca",
-                "reference": "eb6eb063eda04a714ef89f066586a2c49588f7ca",
-                "shasum": ""
+                "type": "path",
+                "url": "../reactphp-term",
+                "reference": "26669086b65c1021def5505787e90fd5e1d5870d"
             },
             "require": {
                 "php": ">=5.3",
-                "react/stream": "^1.0 || ^0.7"
+                "react/stream": "^1.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8",
-                "react/event-loop": "^1.0 || ^0.5 || ^0.4 || ^0.3"
+                "react/event-loop": "^1.2"
             },
             "type": "library",
             "autoload": {
@@ -34,7 +28,11 @@
                     "Clue\\React\\Term\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Clue\\Tests\\React\\Term\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -47,37 +45,26 @@
             "description": "Streaming terminal emulator, built on top of ReactPHP.",
             "homepage": "https://github.com/clue/reactphp-term",
             "keywords": [
+                "ANSI",
+                "ASCII",
                 "C0",
-                "CSI",
-                "ansi",
+                "C1",
+                "ReactPHP",
+                "VT100",
                 "apc",
-                "ascii",
-                "c1",
                 "control codes",
+                "csi",
                 "dps",
                 "osc",
                 "pm",
-                "reactphp",
                 "streaming",
                 "terminal",
-                "vt100",
                 "xterm"
             ],
-            "support": {
-                "issues": "https://github.com/clue/reactphp-term/issues",
-                "source": "https://github.com/clue/reactphp-term/tree/v1.3.0"
-            },
-            "funding": [
-                {
-                    "url": "https://clue.engineering/support",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/clue",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-11-06T11:50:12+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "clue/utf8-react",
@@ -2978,7 +2965,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "clue/term-react": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

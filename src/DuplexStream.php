@@ -34,7 +34,6 @@ class DuplexStream extends EventEmitter implements DuplexStreamInterface {
         // handle all output events
         $this->output->on('error', [$this, 'handleError']);
         $this->output->on('close', [$this, 'handleCloseOutput']);
-        $this->keys = new Keys($this->input, $this);
     }
 
     public function getInputStream() : ReadableStreamInterface
